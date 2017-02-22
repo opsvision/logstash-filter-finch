@@ -1,6 +1,7 @@
 # encoding: utf-8
 require "logstash/filters/base"
 require "logstash/namespace"
+require "rest-client"
 
 # This  filter will replace the contents of the default 
 # message field with whatever you specify in the configuration.
@@ -13,15 +14,14 @@ class LogStash::Filters::Finch < LogStash::Filters::Base
   #
   # filter {
   #    {
-  #     message => "My message..."
+  #     field_name => "message"
   #   }
   # }
   #
   config_name "finch"
   
-  # Replace the message with this value.
-  config :message, :validate => :string, :default => "Hello World!"
-  
+  # Declare configuration settings
+  config :field_name, :validate => :string, :required => true
 
   public
   def register
@@ -31,11 +31,8 @@ class LogStash::Filters::Finch < LogStash::Filters::Base
   public
   def filter(event)
 
-    if @message
-      # Replace the event message with our message as configured in the
-      # config file.
-      event.set("message", @message)
-    end
+    payload = event.get(@field_name)
+    event.set("payload", payload)
 
     # filter_matched should go in the last line of our successful code
     filter_matched(event)

@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name          = 'logstash-filter-finch'
   s.version       = '0.1.0'
-  s.licenses      = ['Apache License (2.0)']
-  s.summary       = 'TODO: Write a short summary, because Rubygems requires one.'
-  s.description   = 'TODO: Write a longer description or delete this line.'
-  s.homepage      = 'TODO: Put your plugin''s website or public repo URL here.'
+  s.licenses      = ['Apache-2.0']
+  s.summary       = 'Interacts with the Finch Computing API'
+  s.description   = 'This logstash filter is used to send content to the Finch Computing disambiguation API.'
+  s.homepage      = 'https://github.com/opsvision/logstash-filter-finch'
   s.authors       = ['David Ishmael']
   s.email         = 'dishmael@opsvision.com'
   s.require_paths = ['lib']
@@ -19,5 +19,6 @@ Gem::Specification.new do |s|
 
   # Gem dependencies
   s.add_runtime_dependency "logstash-core-plugin-api", "~> 2.0"
+  s.add_runtime_dependency "rest-client", "~> 2.0"
   s.add_development_dependency 'logstash-devutils'
 end
