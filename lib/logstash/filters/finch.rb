@@ -22,6 +22,7 @@ class LogStash::Filters::Finch < LogStash::Filters::Base
   
   # Declare configuration settings
   config :field_name, :validate => :string, :required => true
+  config :authtok, :validate => :string, :required => true
 
   public
   def register
@@ -31,8 +32,11 @@ class LogStash::Filters::Finch < LogStash::Filters::Base
   public
   def filter(event)
 
-    payload = event.get(@field_name)
-    event.set("payload", payload)
+    event.set("payload", RestClient.post(
+      'https://text-api.finchcomputing.com/api/v1/enrich',
+      event.get(@field_name), {
+        Authorization: @authtok
+      }))
 
     # filter_matched should go in the last line of our successful code
     filter_matched(event)
